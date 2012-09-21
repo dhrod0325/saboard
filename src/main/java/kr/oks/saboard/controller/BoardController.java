@@ -42,6 +42,7 @@ public class BoardController {
 	public ModelAndView getBoardWriteView(BoardDomain boardDomain) {
 		ModelAndView mav = new ModelAndView(Constants.VIEW_NAME_BOARD_WRITE);
 		mav.addObject("boardDomain", boardDomain);
+		System.out.println("test");
 		return mav;
 	}
 	
