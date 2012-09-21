@@ -26,7 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class BoardController {
-
+	
 	@Autowired
 	private BoardService boardService;
 
@@ -59,7 +59,7 @@ public class BoardController {
 			mav.addObject("theme", theme);
 			mav.setViewName(viewName);
 		}
-
+		
 		return mav;
 	}
 

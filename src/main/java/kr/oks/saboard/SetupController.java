@@ -2,11 +2,9 @@ package kr.oks.saboard;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.HashMap;
 
 import kr.oks.saboard.core.constants.Constants;
 import kr.oks.saboard.core.listener.ContextReloader;
-import kr.oks.saboard.core.util.FileUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,8 +32,6 @@ public class SetupController {
 
 	private void saveConfig() throws Exception{
 		FileOutputStream fos = new FileOutputStream(new File(""));
-		
-		
 		// 설정 파일을 지정한 경로에 저장
 	}
 
