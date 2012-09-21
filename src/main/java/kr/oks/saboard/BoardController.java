@@ -89,7 +89,6 @@ public class BoardController {
 
 			if (multiPartFile.getSize() > 0) {
 				String fileName = FileUtil.uploadDirectbbsFile(request, multiPartFile, Constants.UPLOAD_DIRECTORY);
-
 				BoardFileDomain boardFileDomain = new BoardFileDomain();
 				boardFileDomain.setId(boardDomainId);
 				boardFileDomain.setFile_name(fileName);
