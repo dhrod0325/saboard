@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+	<insert id="board.insertBoardTable" parameterClass="kr.oks.saboard.board.domain.BoardTableDomain">
+		INSERT INTO sa_board_tables (board_nm,theme) values (#board_nm#,#theme#)
+	</insert>
+	
+	<select id="board.getAllBoardTableList" resultClass="kr.oks.saboard.board.domain.BoardTableDomain">
+		SELECT * FROM sa_board_tables
+	</select>
+	
+	
+	
+	<insert id="board.insertBoard" parameterClass="kr.oks.saboard.board.domain.BoardDomain">
+		INSERT INTO sa_board(user_id,password, title, content, has_File ,reg_date)
+		VALUES
+			(#user_id#,#password#,#title#,#content#, #has_File#,now())
+		<selectKey keyProperty="id" resultClass="int">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<insert id="board.insertBoardReply" parameterClass="kr.oks.saboard.board.domain.BoardReplyDomain">
+		INSERT INTO sa_board_reply (no,user_id,password,email,title,content,reg_date) VALUES (#no#, #user_id#, #password#, #email#, #title#, #content#, now());
+	</insert>
+	
+	<insert id="board.insertBoardFile" parameterClass="kr.oks.saboard.board.domain.BoardFileDomain">
+		INSERT INTO sa_board_file(
+			id,
+			file_name,
+			file_size,
+			file_reg_date
+		)
+		VALUES
+			(#id#,#file_name#,#file_size#,now())
+	</insert>
+	
+	<select id="board.getAllBoardReplyListById" parameterClass="java.lang.Integer" resultClass="kr.oks.saboard.board.domain.BoardReplyDomain">
+		SELECT
+			SBR.id,
+			SBR.no,
+			SBR.user_id,
+			SBR.password,
+			SBR.email,
+			SBR.title,
+			SBR.content,
+			SBR.reg_date
+		FROM
+			sa_board_reply SBR
+		WHERE
+			SBR.no = #id#
+		ORDER BY SBR.reg_date DESC
+	</select>
+
+	<select id="board.getTotBoardCount" resultClass="java.lang.Integer">
+		SELECT
+			count(*)
+		FROM
+			sa_board
+	</select>
+	
+	<delete id="board.deleteBoardById" parameterClass="java.lang.Integer">
+		DELETE
+		FROM
+			sa_board
+		WHERE
+			id = #id#
+	</delete>	
+	<select id="board.getAllBoardList" resultClass="kr.oks.saboard.board.domain.BoardDomain" parameterClass="kr.oks.saboard.board.domain.BoardDomain">
+	<![CDATA[
+		SELECT 
+	       SB.rownum, 
+	       SB.id, 
+	       SB.user_id, 
+	       SB.title, 
+	       SB.content, 
+	       SB.reg_date, 
+	       SB.has_File, 
+	       ( 
+	       SELECT 
+	              count(*) 
+	         FROM 
+	              sa_board_reply SBR 
+	        WHERE 
+	              SB.id = SBR.no 
+	       ) reply_cnt 
+	  FROM 
+	       ( 
+	       SELECT 
+	              @ROWNUM := @ROWNUM + 1 AS rownum, 
+	              SB.id, 
+	              SB.user_id, 
+	              SB.title, 
+	              SB.content, 
+	              SB.reg_date, 
+	              SB.has_File 
+	         FROM 
+	              sa_board SB, 
+	              ( 
+	              SELECT 
+	                     @ROWNUM := 0 
+	              ) R 
+	       ) SB 
+	 WHERE 
+	       SB.rownum >= #startNo# 
+	       AND SB.rownum <= #pageSize#
+	       ORDER BY 
+	              reg_date DESC
+	]]>
+	</select>
+	
+	<select id="board.getBoardDetailById" parameterClass="java.lang.Integer" resultClass="kr.oks.saboard.board.domain.BoardDomain">
+		SELECT
+			id,
+			user_id,
+			password,
+			title,
+			content,
+			reg_date,
+			has_File,
+			(select count(*) from 
+				sa_board_reply SBR where SB.id = SBR.no) reply_cnt
+		FROM
+			sa_board SB
+		WHERE
+			id = #id#
+	</select>
+	
+	<select id="board.getBoardFileListById" parameterClass="java.lang.Integer" resultClass="kr.oks.saboard.board.domain.BoardFileDomain">
+		SELECT
+			file_name,
+			file_size
+		FROM
+			sa_board_file
+		WHERE id = #id#
+	</select>
+	
+	<update id="board.updateBoardByboardDomain" parameterClass="kr.oks.saboard.board.domain.BoardDomain">
+		UPDATE sa_board
+		SET user_id = #user_id#,
+		 	title = #title#, content = #content#, password = #password#, has_File = #has_File#
+		WHERE
+			id = #id#
+	</update>
+</sqlMap>

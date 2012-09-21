@@ -1,0 +1,25 @@
+.nodisplay {
+	display: none;
+}
+
+.tr-list-item {
+	cursor: pointer;
+}
+
+.paging a,.paging .prev {
+	margin-right: 10px;
+}
+
+.paging a.on{
+	color:red;
+}
+
+.table td.text-align-right {
+	text-align: right;
+}
+
+table .center {
+	text-align: center;
+}
+
+

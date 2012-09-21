@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+	<parameterMap class="kr.oks.saboard.board.domain.BoardDomain" id="updateMap">
+		<parameter property="user_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<parameter property="title" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<parameter property="content" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<parameter property="id" javaType="java.lang.Integer" jdbcType="NUMBER"/>
+	</parameterMap>
+	
+	<resultMap class="kr.oks.saboard.board.domain.BoardDomain" id="boardResultMap">
+		<result property="id" column="id"/>
+		<result property="user_id" column="user_id"/>
+		<result property="title" column="title"/>
+		<result property="content" column="content"/>
+		<result property="reg_date" column="reg_date"/>
+		<result property="has_File" column="has_File"/>
+	</resultMap>
+	
+	<insert id="board.insertBoard" parameterClass="kr.oks.saboard.board.domain.BoardDomain">
+		INSERT INTO sa_board(user_id, title, content, has_File ,reg_date)
+		VALUES
+			(#user_id#,#title#,#content#, #has_File#,now())
+		<selectKey keyProperty="id" resultClass="int">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<insert id="board.insertBoardFile" parameterClass="kr.oks.saboard.board.domain.BoardFileDomain">
+		INSERT INTO sa_board_file(
+			id,
+			file_name,
+			file_size,
+			file_reg_date
+		)
+		VALUES
+			(#id#,#file_name#,#file_size#,now())
+	</insert>
+	
+	<select id="board.getTotBoardCount" resultClass="java.lang.Integer">
+		SELECT
+			count(*)
+		FROM
+			sa_board
+	</select>
+	
+	<delete id="board.deleteBoardById" parameterClass="java.lang.Integer">
+		DELETE
+		FROM
+			sa_board
+		WHERE
+			id = #id#
+	</delete>	
+	<select id="board.getAllBoardList" resultMap="boardResultMap" parameterClass="kr.oks.saboard.board.domain.BoardDomain">
+		SELECT
+			id,
+			user_id,
+			title,
+			content,
+			reg_date,
+			has_File
+		FROM
+			sa_board
+		ORDER BY
+			reg_date DESC
+		LIMIT #startNo#,#pageSize#
+	</select>
+	
+	<select id="board.getBoardDetailById" parameterClass="java.lang.Integer" resultMap="boardResultMap">
+		SELECT
+			id,
+			user_id,
+			title,
+			content,
+			reg_date,
+			has_File
+		FROM
+			sa_board
+		WHERE
+			id = #id#
+	</select>
+	
+	<select id="board.getBoardFileById" parameterClass="java.lang.Integer" resultClass="kr.oks.saboard.board.domain.BoardFileDomain">
+		SELECT
+			file_name,
+			file_size
+		FROM
+			sa_board_file
+		WHERE id = #id#
+	</select>
+	
+	<update id="board.updateBoardByboardDomain" parameterMap="updateMap">
+		UPDATE sa_board
+		SET user_id = ?,
+		 title =?, content = ?
+		WHERE
+			id =?
+	</update>
+</sqlMap>

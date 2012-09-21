@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+	<parameterMap class="kr.oks.saboard.common.domain.MemberDomain" id="memberDomainParamMap">
+		<parameter property="id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<parameter property="pw" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<parameter property="name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	</parameterMap>
+	
+	<select id="common.test" resultClass="hashmap">
+		select * from sa_member
+	</select>
+	
+	<insert id="common.join" parameterMap="memberDomainParamMap">
+		insert into sa_member (id,pw,name) values (?,?,?);
+	</insert>
+	
+	
+	
+</sqlMap>
