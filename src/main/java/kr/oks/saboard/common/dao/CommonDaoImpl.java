@@ -16,4 +16,8 @@ public class CommonDaoImpl extends SqlMapClientDaoSupport implements CommonDao{
 	public void join(MemberDomain memberDomain) {
 		getSqlMapClientTemplate().insert("common.join",memberDomain);
 	}
+
+	public MemberDomain getLoginMemeberDomain(MemberDomain memberDomain) {
+		return (MemberDomain) getSqlMapClientTemplate().queryForObject("common.loginCheck",memberDomain);
+	}
 }

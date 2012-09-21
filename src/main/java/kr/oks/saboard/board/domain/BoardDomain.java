@@ -2,12 +2,13 @@ package kr.oks.saboard.board.domain;
 
 import java.util.Date;
 
-import kr.oks.saboard.common.tags.domain.PagingDomain;
-import kr.oks.saboard.constants.Constants;
+import kr.oks.saboard.core.constants.Constants;
+import kr.oks.saboard.core.tags.domain.PagingDomain;
 
 public class BoardDomain extends PagingDomain {
 	private int id;
 	private int rownum;
+	private String board_id;
 	private String user_id;
 	private String password;
 	private String title;
@@ -15,6 +16,24 @@ public class BoardDomain extends PagingDomain {
 	private String has_File = Constants.HAS_FILE_NO;
 	private Date reg_date;
 	private int reply_cnt;
+	private String theme;
+	private String board_table;
+
+	public String getBoard_table() {
+		return board_table;
+	}
+
+	public void setBoard_table(String board_table) {
+		this.board_table = board_table;
+	}
+
+	public String getTheme() {
+		return theme;
+	}
+
+	public void setTheme(String theme) {
+		this.theme = theme;
+	}
 
 	public int getId() {
 		return id;
@@ -86,5 +105,13 @@ public class BoardDomain extends PagingDomain {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getBoard_id() {
+		return board_id;
+	}
+
+	public void setBoard_id(String board_id) {
+		this.board_id = board_id;
 	}
 }

@@ -31,8 +31,8 @@ public class BoardDaoImpl extends SqlMapClientDaoSupport implements BoardDao{
 		getSqlMapClientTemplate().update("board.updateBoardByboardDomain",boardDomain);
 	}
 
-	public int getTotBoardCount() {
-		return (Integer) getSqlMapClientTemplate().queryForObject("board.getTotBoardCount");
+	public int getTotBoardCount(String board_id) {
+		return (Integer) getSqlMapClientTemplate().queryForObject("board.getTotBoardCount",board_id);
 	}
 
 	public void insertBoardFile(BoardFileDomain boardFileDomain) {
@@ -47,11 +47,35 @@ public class BoardDaoImpl extends SqlMapClientDaoSupport implements BoardDao{
 		getSqlMapClientTemplate().insert("board.insertBoardReply",boardReplyDomain);
 	}
 
-	public List<BoardReplyDomain> getAllBoardReplyListById(int id) {
-		return getSqlMapClientTemplate().queryForList("board.getAllBoardReplyListById",id);
+	public List<BoardReplyDomain> getAllBoardReplyListById(BoardReplyDomain boardReplyDomain) {
+		return getSqlMapClientTemplate().queryForList("board.getAllBoardReplyListById",boardReplyDomain);
 	}
 
 	public List<BoardTableDomain> getAllBoardTableList() {
 		return getSqlMapClientTemplate().queryForList("board.getAllBoardTableList");
+	}
+
+	public void insertBoardTable(BoardTableDomain boardTableDomain) {
+		getSqlMapClientTemplate().insert("board.insertBoardTable",boardTableDomain);
+	}
+	
+	public String getBoardTheme(String board_id){
+		return (String) getSqlMapClientTemplate().queryForObject("board.getTheme",board_id);
+	}
+
+	public void deleteBoardTable(int id) {
+		getSqlMapClientTemplate().delete("board.deleteBoardTable",id); 
+	}
+
+	public void modifyBoardTable(BoardTableDomain boardTableDomain) {
+		getSqlMapClientTemplate().update("board.modifyBoardTable",boardTableDomain);
+	}
+
+	public String getBoardIdById(BoardTableDomain boardTableDomain) {
+		return (String) getSqlMapClientTemplate().queryForObject("board.getBoardIdById",boardTableDomain);
+	}
+
+	public int getTotBoardReplyCount(int no) {
+		return (Integer) getSqlMapClientTemplate().queryForObject("board.getTotBoardReplyCount",no);
 	}
 }

@@ -9,6 +9,14 @@
 			</div>
 			<div class="row-fluid">
 				<div class="span4">
+					<h2>게시판 목록</h2>
+					<c:forEach items="${boardTableList }" var="boardTableDomain">
+						<ul>
+							<li><a href="<%=request.getContextPath() %>/getBoardListView.do?board_id=${boardTableDomain.board_id }">${boardTableDomain.board_nm }</a></li>
+						</ul>					
+					</c:forEach>
+				</div>
+				<div class="span4">
 					<h2>스킨 목록</h2>
 					<ul>
 					<c:forEach items="${skinList }" var="skin">
@@ -16,24 +24,9 @@
 					</c:forEach>
 					</ul>
 				</div>
-				<!--/span-->
 				<div class="span4">
-					<h2>게시판 2</h2>
-					<p>Donec id elit non mi porta gravida at eget metus. Fusce
-						dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh,
-						ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
-						magna mollis euismod. Donec sed odio dui.</p>
-					<p>
-						<a class="btn" href="#">View details »</a>
-					</p>
-				</div>
-				<!--/span-->
-				<div class="span4">
-					<h2>게시판 3</h2>
-					<p>Donec id elit non mi porta gravida at eget metus. Fusce
-						dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh,
-						ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
-						magna mollis euismod. Donec sed odio dui.</p>
+					<h2>위젯 3</h2>
+					<p>무엇이 들어가면 괜찮을까...무엇이 들어가면 괜찮을까...무엇이 들어가면 괜찮을까...무엇이 들어가면 괜찮을까...</p>
 					<p>
 						<a class="btn" href="#">View details »</a>
 					</p>
@@ -44,33 +37,24 @@
 			
 			<div class="row-fluid">
 				<div class="span4">
-					<h2>Heading</h2>
-					<p>Donec id elit non mi porta gravida at eget metus. Fusce
-						dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh,
-						ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
-						magna mollis euismod. Donec sed odio dui.</p>
+					<h2>위젯4</h2>
+					<p>무엇이 들어가면 괜찮을까...무엇이 들어가면 괜찮을까...무엇이 들어가면 괜찮을까...무엇이 들어가면 괜찮을까...무엇이 들어가면 괜찮을까...무엇이 들어가면 괜찮을까...</p>
 					<p>
 						<a class="btn" href="#">View details »</a>
 					</p>
 				</div>
 				<!--/span-->
 				<div class="span4">
-					<h2>Heading</h2>
-					<p>Donec id elit non mi porta gravida at eget metus. Fusce
-						dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh,
-						ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
-						magna mollis euismod. Donec sed odio dui.</p>
+					<h2>위젯 5</h2>
+					<p>무엇이 들어가면 괜찮을까...무엇이 들어가면 괜찮을까...무엇이 들어가면 괜찮을까...무엇이 들어가면 괜찮을까...무엇이 들어가면 괜찮을까...무엇이 들어가면 괜찮을까...</p>
 					<p>
 						<a class="btn" href="#">View details »</a>
 					</p>
 				</div>
 				<!--/span-->
 				<div class="span4">
-					<h2>Heading</h2>
-					<p>Donec id elit non mi porta gravida at eget metus. Fusce
-						dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh,
-						ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
-						magna mollis euismod. Donec sed odio dui.</p>
+					<h2>위젯 6</h2>
+					<p>무엇이 들어가면 괜찮을까...무엇이 들어가면 괜찮을까...무엇이 들어가면 괜찮을까...무엇이 들어가면 괜찮을까...무엇이 들어가면 괜찮을까...</p>
 					<p>
 						<a class="btn" href="#">View details »</a>
 					</p>

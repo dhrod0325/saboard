@@ -8,10 +8,10 @@
 	<jsp:param value="글 상세보기" name="title"/>
 </jsp:include>
 <form:form name="thisForm" commandName="boardDomain">
-	<form:hidden path="pageNo" />
 	<form:hidden path="id" />
-	<form:hidden path="password" id="boardDomainPassword"/>
-	
+	<input type="hidden" name="password" id="boardDomainPassword"/>
+	<form:hidden path="board_id"/>
+	<form:hidden path="board_table"/>
 	<table class="table table-bordered table-hover">
 		<tr>
 			<th style="width:10%;">작성자</th>
@@ -39,39 +39,58 @@
 		</c:forEach>
 		<tr>
 			<td colspan="4" class="text-align-right">
-				<a href="#deleteModal" role="button" class="btn btn-primary" data-toggle="modal">삭 제 </a>
-				<div class="modal hide fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-				  <div class="modal-header">
-				    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				    <h3 id="myModalLabel">비밀번호를 입력하세요</h3>
-				  </div>
-				  <div class="modal-body">
-				    <p>
-				    	<input type="text" id="delete_password"/>
-				    </p>
-				  </div>
-				  <div class="modal-footer">
-   				    <a href="#" class="btn btn-primary" id="btn_delete">삭 제</a>
-				    <a href="#" class="btn" data-dismiss="modal" aria-hidden="true">취 소</a>
-				  </div>
-				</div>	
+				<c:if test="${loginMemberDomain.isAdmin == true }">
+					<a href="#" class="btn btn-primary" id="btn_admin_delete">관리자권한으로 삭제</a>
+					<a href="#" class="btn btn-primary" id="btn_admin_modify">관리자권한으로 수정</a>
+					<script type="text/javascript">
+						$('#btn_admin_delete').click(function(){
+							if(confirm('정말로 삭제 하시겠습니까?')){
+								$('#boardDomain').attr('action','getBoardDelete.do');
+								$('#boardDomain').submit();	
+							}							
+						});
+						
+						$('#btn_admin_modify').click(function(){
+							$('#boardDomain').attr('action','getBoardModifyView.do');
+							$('#boardDomain').submit();
+						});
+					</script>
+				</c:if>
+				<c:if test="${loginMemberDomain.isAdmin != true }">
+					<a href="#deleteModal" role="button" class="btn btn-primary" data-toggle="modal">삭 제 </a>
 				
-				<a href="#modifyModal" role="button" class="btn btn-primary" data-toggle="modal">수 정 </a>
-				<div class="modal hide fade" id="modifyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-				  <div class="modal-header">
-				    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				    <h3 id="myModalLabel">비밀번호를 입력하세요</h3>
-				  </div>
-				  <div class="modal-body">
-				    <p>
-				    	<input type="text" id="modify_password" />
-				    </p>
-				  </div>
-				  <div class="modal-footer">
-   				    <a href="#" class="btn btn-primary" id="btn_modify">수 정</a>
-				    <a href="#" class="btn" data-dismiss="modal" aria-hidden="true">취 소</a>
-				  </div>
-				</div>
+					<div class="modal hide fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					  <div class="modal-header">
+					    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					    <h3 id="myModalLabel">비밀번호를 입력하세요</h3>
+					  </div>
+					  <div class="modal-body">
+					    <p>
+					    	<input type="password" id="delete_password"/>
+					    </p>
+					  </div>
+					  <div class="modal-footer">
+	   				    <a href="#" class="btn btn-primary" id="btn_delete">삭 제</a>
+					    <a href="#" class="btn" data-dismiss="modal" aria-hidden="true">취 소</a>
+					  </div>
+					</div>
+					<a href="#modifyModal" role="button" class="btn btn-primary" data-toggle="modal">수 정 </a>
+					<div class="modal hide fade" id="modifyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					  <div class="modal-header">
+					    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					    <h3 id="myModalLabel">비밀번호를 입력하세요</h3>
+					  </div>
+					  <div class="modal-body">
+					    <p>
+					    	<input type="password" id="modify_password" />
+					    </p>
+					  </div>
+					  <div class="modal-footer">
+	   				    <a href="#" class="btn btn-primary" id="btn_modify">수 정</a>
+					    <a href="#" class="btn" data-dismiss="modal" aria-hidden="true">취 소</a>
+					  </div>
+					</div>		
+				</c:if>
 			</td>
 		</tr>
 	</table>
@@ -96,8 +115,25 @@
 				</table>
 			</c:forEach>
 	</c:if>
+	
+	<c:if test="${boardReplyDomain.totalSize > boardReplyDomain.pageSize}">
+		<div class="paging" style="text-align: center;margin-bottom:20px;">
+			<pagination:paging>
+				<pagination:function>goListPage</pagination:function>
+				<pagination:currentPage>${boardReplyDomain.pageNo}</pagination:currentPage>
+				<pagination:totalRows>${boardReplyDomain.totalSize}</pagination:totalRows>
+				<pagination:pageSize>${boardReplyDomain.pageSize}</pagination:pageSize>
+				<pagination:imgPrevPath><%=request.getContextPath()%>/resources/${theme }/images/common/paging_prev.png</pagination:imgPrevPath>
+				<pagination:imgNextPath><%=request.getContextPath()%>/resources/${theme }/images/common/paging_next.png</pagination:imgNextPath>
+			</pagination:paging>
+		</div>
+	</c:if>
+	
 	<form:form action="getBoardInsertReply.do" method="post" commandName="boardReplyDomain">
+		<input type="hidden" name="id" value="${boardDomain.id }">
 		<input type="hidden" name="no" value="${boardDomain.id }">
+		<form:hidden path="board_id"/>
+		<form:hidden path="pageNo"/>
 		<table class="table table-bordered table-hover">
 			<tr>
 				<th colspan="4">댓글 작성</th>
@@ -117,7 +153,7 @@
 			<tr>
 				<th>비밀 번호</th>
 				<td colspan="3">
-					<form:input path="password" cssClass="input-xxlarge" />
+					<form:password path="password" cssClass="input-xxlarge" />
 					<form:errors path="password" />
 				</td>
 			</tr>
@@ -151,6 +187,12 @@
 		</table>
 	</form:form>
 <script type="text/javascript">
+	function goListPage(pageNo) {
+		$('#pageNo').val(pageNo);
+		$('#boardReplyDomain').attr('action','getBoardDetailView.do');
+		$('#boardReplyDomain').submit();
+	}
+	
 	$(document).ready(function(){
 		$('#btn_back').click(function(e){
 			e.preventDefault();

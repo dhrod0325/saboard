@@ -7,6 +7,7 @@
 <form:form commandName="boardDomain" action="getBoardInsert.do" enctype="multipart/form-data">
 	<form:hidden path="pageNo"/>
 	<form:hidden path="id"/>
+	<form:hidden path="board_id"/>
 	<table class="table table-bordered table-hover">
 		<tr>
 			<th>

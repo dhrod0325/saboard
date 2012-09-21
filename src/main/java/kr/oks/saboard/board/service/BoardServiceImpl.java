@@ -6,27 +6,32 @@ import kr.oks.saboard.board.dao.BoardDao;
 import kr.oks.saboard.board.domain.BoardDomain;
 import kr.oks.saboard.board.domain.BoardFileDomain;
 import kr.oks.saboard.board.domain.BoardReplyDomain;
-import kr.oks.saboard.helper.HelperUtil;
+import kr.oks.saboard.board.domain.BoardTableDomain;
+import kr.oks.saboard.core.filter.xss.XssFilterUtil;
+import kr.oks.saboard.core.util.auth.AuthUtil;
 
 public class BoardServiceImpl implements BoardService{
-	private HelperUtil helperUtil = new HelperUtil();
-	
 	private BoardDao boardDao;
 	
 	public void setBoardDao(BoardDao boardDao) {
 		this.boardDao = boardDao;
 	}
 	
-	public int insertBoard(BoardDomain boardDomain) {
+	public int insertBoard(BoardDomain boardDomain) throws Exception {
 		BoardDomain oldBoardDomain = getBoardDetailById(boardDomain.getId());
 		
-		boardDomain.setUser_id(helperUtil.htmlInputFilter(boardDomain.getUser_id()));
-		boardDomain.setTitle(helperUtil.htmlInputFilter(boardDomain.getTitle()));
-		boardDomain.setContent(helperUtil.removeXSS(boardDomain.getContent()));
+		boardDomain.setUser_id(XssFilterUtil.htmlInputFilter(boardDomain.getUser_id()));
+		boardDomain.setTitle(XssFilterUtil.htmlInputFilter(boardDomain.getTitle()));
+		boardDomain.setContent(XssFilterUtil.removeXSS(boardDomain.getContent()));
 		
 		if(oldBoardDomain == null){
 			return boardDao.insertBoard(boardDomain);
 		}else{
+			if(AuthUtil.getLoginMemberDomain().getIsAdmin()){
+				boardDao.updateBoardByboardDomain(boardDomain);
+				return boardDomain.getId();
+			}
+			
 			if(oldBoardDomain.getPassword().equals(boardDomain.getPassword()))
 				boardDao.updateBoardByboardDomain(boardDomain);
 			
@@ -50,29 +55,57 @@ public class BoardServiceImpl implements BoardService{
 		boardDao.updateBoardByboardDomain(domain);
 	}
 
-	public int getTotBoardCount() {
-		return boardDao.getTotBoardCount();
+	public int getTotBoardCount(String board_id) {
+		return boardDao.getTotBoardCount(board_id);
 	}
 
 	public void insertBoardFile(BoardFileDomain boardFileDomain) {
-		boardFileDomain.setFile_name(helperUtil.htmlInputFilter(boardFileDomain.getFile_name()));
+		boardFileDomain.setFile_name(XssFilterUtil.htmlInputFilter(boardFileDomain.getFile_name()));
 		boardDao.insertBoardFile(boardFileDomain);
 	}
 
 
 	public void insertBoardReply(BoardReplyDomain boardReplyDomain) {
-		boardReplyDomain.setUser_id(helperUtil.htmlInputFilter(boardReplyDomain.getUser_id()));
-		boardReplyDomain.setEmail(helperUtil.htmlInputFilter(boardReplyDomain.getEmail()));
-		boardReplyDomain.setContent(helperUtil.htmlInputFilter(boardReplyDomain.getContent()));
+		boardReplyDomain.setUser_id(XssFilterUtil.htmlInputFilter(boardReplyDomain.getUser_id()));
+		boardReplyDomain.setEmail(XssFilterUtil.htmlInputFilter(boardReplyDomain.getEmail()));
+		boardReplyDomain.setContent(XssFilterUtil.htmlInputFilter(boardReplyDomain.getContent()));
 		boardDao.insertBoardReply(boardReplyDomain);
 	}
 
 
-	public List<BoardReplyDomain> getAllBoardReplyListById(int id) {
-		return boardDao.getAllBoardReplyListById(id);
+	public List<BoardReplyDomain> getAllBoardReplyListById(BoardReplyDomain boardReplyDomain) {
+		return boardDao.getAllBoardReplyListById(boardReplyDomain);
 	}
 
 	public List<BoardFileDomain> getBoardFileListById(int id) throws Exception {
 		return boardDao.getBoardFileListById(id);
+	}
+	
+	public List<BoardTableDomain> getAllBoardTableList() {
+		return boardDao.getAllBoardTableList();
+	}
+	
+	public void insertBoardTable(BoardTableDomain boardTableDomain) {
+		boardDao.insertBoardTable(boardTableDomain);
+	}
+
+	public String getBoardTheme(String board_id) {
+		return boardDao.getBoardTheme(board_id);
+	}
+
+	public void deleteBoardTable(int id) {
+		boardDao.deleteBoardTable(id);
+	}
+
+	public void modifyBoardTable(BoardTableDomain boardTableDomain) {
+		boardDao.modifyBoardTable(boardTableDomain);
+	}
+
+	public String getBoardIdById(BoardTableDomain boardTableDomain) {
+		return boardDao.getBoardIdById(boardTableDomain);
+	}
+
+	public int getTotBoardReplyCount(int no) {
+		return boardDao.getTotBoardReplyCount(no);
 	}
 }

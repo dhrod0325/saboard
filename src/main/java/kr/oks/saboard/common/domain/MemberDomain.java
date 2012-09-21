@@ -1,10 +1,13 @@
 package kr.oks.saboard.common.domain;
 
+
 public class MemberDomain {
+	private int no;
 	private String id;
 	private String pw;
 	private String name;
-
+	private int role;
+	
 	public String getId() {
 		return id;
 	}
@@ -29,4 +32,30 @@ public class MemberDomain {
 		this.name = name;
 	}
 
+	public int getNo() {
+		return no;
+	}
+
+	public void setNo(int no) {
+		this.no = no;
+	}
+
+	public int getRole() {
+		return role;
+	}
+
+	public void setRole(int role) {
+		this.role = role;
+	}
+	
+	public boolean getIsAdmin(){
+		return getRole() == 10 ? true : false;
+	}
+	
+	public boolean getIsMember(){
+		return getRole() != 0 && !getIsAdmin();
+	}
+	public boolean getIsNotMember(){
+		return !getIsAdmin() && !getIsMember();
+	}
 }

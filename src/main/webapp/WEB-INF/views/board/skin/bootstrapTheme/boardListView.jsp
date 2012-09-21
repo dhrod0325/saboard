@@ -10,6 +10,7 @@
 <form:form name="thisForm" commandName="boardDomain">
 	<form:hidden path="id"/>
 	<form:hidden path="pageNo"/>
+	<form:hidden path="board_id"/>
 	<table class="table table-bordered table-hover" id="board-list-table">
 		<caption class="nodisplay">게시판 리스트</caption>
 		<thead>
@@ -21,17 +22,17 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach items="${boardListDomain }" var="boardDomain">
+			<c:forEach items="${boardListDomain }" var="objboardDomain" varStatus="i">
 				<tr class="tr-list-item">
-					<td class="center">${boardDomain.rownum }</td>
+					<td class="center">${boardDomain.totalSize - (i.count-1)- ((boardDomain.pageNo-1) * boardDomain.pageSize) }</td>
 					<td>
-						${boardDomain.title }
-						<c:if test="${boardDomain.has_File == 'YES'}"><i class="icon-file" ></i></c:if>
-						<c:if test="${boardDomain.reply_cnt != '0'}">(${boardDomain.reply_cnt })</c:if>
+						${objboardDomain.title }
+						<c:if test="${objboardDomain.has_File == 'YES'}"><i class="icon-file" ></i></c:if>
+						<c:if test="${objboardDomain.reply_cnt != '0'}">(${objboardDomain.reply_cnt })</c:if>
 					</td>
-					<td>${boardDomain.user_id }</td>
-					<td class="center"><fmt:formatDate value="${boardDomain.reg_date }" pattern="yyyy-MM-dd" /></td>
-					<td class="nodisplay list-item-id">${boardDomain.id }</td>
+					<td>${objboardDomain.user_id }</td>
+					<td class="center"><fmt:formatDate value="${objboardDomain.reg_date }" pattern="yyyy-MM-dd" /></td>
+					<td class="nodisplay list-item-id">${objboardDomain.id }</td>
 				</tr>
 			</c:forEach>
 			<tr>
@@ -41,8 +42,8 @@
 						<pagination:currentPage>${boardDomain.pageNo}</pagination:currentPage>
 						<pagination:totalRows>${boardDomain.totalSize}</pagination:totalRows>
 						<pagination:pageSize>${boardDomain.pageSize}</pagination:pageSize>
-						<pagination:imgPrevPath>/resources/bootstrapTheme/images/common/paging_prev.png</pagination:imgPrevPath>
-						<pagination:imgNextPath>/resources/bootstrapTheme/images/common/paging_next.png</pagination:imgNextPath>
+						<pagination:imgPrevPath><%=request.getContextPath()%>/resources/${theme }/images/common/paging_prev.png</pagination:imgPrevPath>
+						<pagination:imgNextPath><%=request.getContextPath()%>/resources/${theme }/images/common/paging_next.png</pagination:imgNextPath>
 					</pagination:paging>
 				</td>
 			</tr>

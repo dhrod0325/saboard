@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id="boardDao" class="kr.oks.saboard.board.dao.BoardDaoImpl">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="sqlMapClient" ref="sqlMapClient"></property>
+	</bean>
+
+
+	<bean class="kr.oks.saboard.board.service.BoardServiceImpl">
+		<property name="boardDao" ref="boardDao"></property>
+	</bean>
+</beans>
+
+

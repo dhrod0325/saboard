@@ -9,4 +9,6 @@ public interface CommonService {
 	public List<HashMap<String, String>> test();
 
 	public void join(MemberDomain memberDomain);
+	
+	public MemberDomain getLoginMemeberDomain(MemberDomain memberDomain);
 }

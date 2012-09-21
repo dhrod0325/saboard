@@ -28,6 +28,7 @@
 
 <link rel="stylesheet" href="<%=request.getContextPath() %>/resources/common/bootstrap/css/bootstrap.min.css" />
 <link rel="stylesheet" href="<%=request.getContextPath() %>/resources/common/bootstrap/css/bootstrap-responsive.min.css" />
+<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/common/css/style.css" />
 
 <!-- script -->
 <script type="text/javascript" src="<%=request.getContextPath() %>/resources/common/js/jquery1.8.1.js"></script>

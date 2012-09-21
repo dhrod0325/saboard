@@ -2,7 +2,9 @@ package kr.oks.saboard.board.domain;
 
 import java.util.Date;
 
-public class BoardReplyDomain {
+import kr.oks.saboard.core.tags.domain.PagingDomain;
+
+public class BoardReplyDomain extends PagingDomain{
 	private int id;
 	private int no;
 	private String user_id;
@@ -11,6 +13,15 @@ public class BoardReplyDomain {
 	private String title;
 	private String content;
 	private Date reg_date;
+	private String board_id;
+	
+	public String getBoard_id() {
+		return board_id;
+	}
+
+	public void setBoard_id(String board_id) {
+		this.board_id = board_id;
+	}
 
 	public int getId() {
 		return id;

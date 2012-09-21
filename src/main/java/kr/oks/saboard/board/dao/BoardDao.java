@@ -18,7 +18,9 @@ public interface BoardDao {
 	
 	public void updateBoardByboardDomain(BoardDomain boardDomain);
 	
-	public int getTotBoardCount();
+	public int getTotBoardCount(String board_id);
+	
+	public int getTotBoardReplyCount(int no);
 	
 	public void insertBoardFile(BoardFileDomain boardFileDomain);
 	
@@ -26,7 +28,17 @@ public interface BoardDao {
 	
 	public void insertBoardReply(BoardReplyDomain boardReplyDomain);
 	
-	public List<BoardReplyDomain> getAllBoardReplyListById(int id);
+	public List<BoardReplyDomain> getAllBoardReplyListById(BoardReplyDomain boardReplyDomain);
 	
 	public List<BoardTableDomain> getAllBoardTableList();
+	
+	public void insertBoardTable(BoardTableDomain boardTableDomain);
+	
+	public String getBoardTheme(String board_id);
+	
+	public void deleteBoardTable(int id); 
+	
+	public void modifyBoardTable(BoardTableDomain boardTableDomain);
+	
+	public String getBoardIdById(BoardTableDomain boardTableDomain);
 }

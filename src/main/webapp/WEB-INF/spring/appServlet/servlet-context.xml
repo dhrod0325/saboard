@@ -19,22 +19,16 @@
 		class="org.springframework.context.support.ResourceBundleMessageSource">
 		<beans:property name="basenames">
 			<beans:list>
-				<beans:value>kr.oks.saboard.resources.validation</beans:value>
+				<beans:value>kr.oks.saboard.resources.messages.validation</beans:value>
 			</beans:list>
 		</beans:property>
 	</beans:bean>
 
-	<beans:bean id="multipartResolver"
-		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-	</beans:bean>
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
 
-	<beans:bean id="fileDownloadView" class="kr.oks.saboard.helper.view.FileDownLoadView" />
-	<beans:bean id="fileViewResolver"
-		class="org.springframework.web.servlet.view.BeanNameViewResolver">
+	<beans:bean id="beanNameResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver">
 		<beans:property name="order" value="0" />
 	</beans:bean>
-
-	<beans:bean class="kr.oks.saboard.helper.HelperUtil"></beans:bean>
-
+	
 	<context:component-scan base-package="kr.oks.saboard" />
 </beans:beans>
