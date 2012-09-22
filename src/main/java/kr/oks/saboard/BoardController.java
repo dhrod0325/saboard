@@ -143,7 +143,7 @@ public class BoardController {
 			return mav;
 		}
 		
-		if(AuthUtil.IsMember()){
+		if(AuthUtil.IsNotMember()){
 			BoardDomain passwordCheckBoardDomain = boardService.getBoardDetailById(boardDomain.getId());
 
 			new BoardDomainPasswordValidator(passwordCheckBoardDomain.getPassword()).validate(boardDomain, result);
@@ -178,7 +178,7 @@ public class BoardController {
 			return mav;
 		}
 		
-		if(AuthUtil.IsMember()){
+		if(AuthUtil.IsNotMember()){
 			new BoardDomainPasswordValidator(passwordCheckBoardDomain.getPassword()).validate(boardDomain, result);
 
 			if (result.hasErrors()) {

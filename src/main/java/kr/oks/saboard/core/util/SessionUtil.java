@@ -82,4 +82,8 @@ public class SessionUtil {
 		String redirectUrl = urlprefix+ url;
 		response.sendRedirect(redirectUrl);
 	}
+	
+	public static String getServletRealPath(HttpServletRequest request,String realPath){
+		return request.getSession().getServletContext().getRealPath(realPath);
+	}
 }

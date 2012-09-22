@@ -2,6 +2,9 @@ package kr.oks.saboard.board.domain;
 
 import java.util.Date;
 
+import com.j256.ormlite.table.DatabaseTable;
+
+@DatabaseTable
 public class BoardFileDomain {
 	private int id;
 	private int file_no;

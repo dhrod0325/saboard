@@ -13,6 +13,7 @@
 		<org.aspectj-version>1.6.9</org.aspectj-version>
 		<org.slf4j-version>1.5.10</org.slf4j-version>
 		<tiles-version>2.2.2</tiles-version>
+		<ormlite-version>4.41</ormlite-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
@@ -196,6 +197,20 @@
 			<artifactId>tiles-jsp</artifactId>
 			<version>${tiles-version}</version>
 		</dependency>
+
+		<!-- orm-lite -->
+
+		<dependency>
+			<groupId>com.j256.ormlite</groupId>
+			<artifactId>ormlite-core</artifactId>
+			<version>${ormlite-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.j256.ormlite</groupId>
+			<artifactId>ormlite-jdbc</artifactId>
+			<version>${ormlite-version}</version>
+		</dependency>
+		
 	</dependencies>
 	<build>
 		<plugins>

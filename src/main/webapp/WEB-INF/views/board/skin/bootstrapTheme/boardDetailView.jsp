@@ -29,7 +29,7 @@
 			<tr>
 				<th style="width:10%;">파일 명</th>
 				<td>
-					<a href="file?fileName=${boardFileDomain.file_name }">${boardFileDomain.file_name }</a>
+					<a href="file.do?fileName=${boardFileDomain.file_name }">${boardFileDomain.file_name }</a>
 				</td>
 				<th style="width:10%;">
 					파일 크기

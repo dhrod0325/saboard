@@ -38,7 +38,6 @@ public class SetupController {
 	public void setContextReloader(ContextReloader contextReolader) {
 		this.contextReloader = contextReolader;
 	}
-	
 }
 
 
