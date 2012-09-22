@@ -2,6 +2,8 @@ package kr.oks.saboard.core.util;
 
 import java.util.Enumeration;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import kr.oks.saboard.core.constants.Constants;
@@ -68,5 +70,16 @@ public class SessionUtil {
 			session.removeAttribute(enu.nextElement());
 		}
 		session.invalidate();
+	}
+	
+	public static void sendRedirect(HttpServletRequest request,HttpServletResponse response,String url) throws Exception{
+		String rootPath = request.getContextPath();
+		String serverName = request.getServerName();
+		int port = request.getServerPort();
+		
+		String urlprefix = "http://"+serverName+":"+port+rootPath;
+		
+		String redirectUrl = urlprefix+ url;
+		response.sendRedirect(redirectUrl);
 	}
 }

@@ -20,8 +20,8 @@ public class BoardServiceImpl implements BoardService{
 	public int insertBoard(BoardDomain boardDomain) throws Exception {
 		BoardDomain oldBoardDomain = getBoardDetailById(boardDomain.getId());
 		
-//		boardDomain.setUser_id(XssFilterUtil.htmlInputFilter(boardDomain.getUser_id()));
-//		boardDomain.setTitle(XssFilterUtil.htmlInputFilter(boardDomain.getTitle()));
+		boardDomain.setUser_id(XssFilterUtil.htmlInputFilter(boardDomain.getUser_id()));
+		boardDomain.setTitle(XssFilterUtil.htmlInputFilter(boardDomain.getTitle()));
 		boardDomain.setContent(XssFilterUtil.removeXSS(boardDomain.getContent()));
 		
 		if(oldBoardDomain == null){
@@ -60,15 +60,15 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	public void insertBoardFile(BoardFileDomain boardFileDomain) {
-//		boardFileDomain.setFile_name(XssFilterUtil.htmlInputFilter(boardFileDomain.getFile_name()));
+		boardFileDomain.setFile_name(XssFilterUtil.htmlInputFilter(boardFileDomain.getFile_name()));
 		boardDao.insertBoardFile(boardFileDomain);
 	}
 
 
 	public void insertBoardReply(BoardReplyDomain boardReplyDomain) {
-//		boardReplyDomain.setUser_id(XssFilterUtil.htmlInputFilter(boardReplyDomain.getUser_id()));
-//		boardReplyDomain.setEmail(XssFilterUtil.htmlInputFilter(boardReplyDomain.getEmail()));
-//		boardReplyDomain.setContent(XssFilterUtil.htmlInputFilter(boardReplyDomain.getContent()));
+		boardReplyDomain.setUser_id(XssFilterUtil.htmlInputFilter(boardReplyDomain.getUser_id()));
+		boardReplyDomain.setEmail(XssFilterUtil.htmlInputFilter(boardReplyDomain.getEmail()));
+		boardReplyDomain.setContent(XssFilterUtil.htmlInputFilter(boardReplyDomain.getContent()));
 		boardDao.insertBoardReply(boardReplyDomain);
 	}
 

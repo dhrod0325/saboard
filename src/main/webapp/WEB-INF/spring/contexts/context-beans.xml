@@ -10,7 +10,6 @@
 	</bean>
 	
 	<bean class="kr.oks.saboard.core.listener.ContextReloader" />
-	
 </beans>
 
 

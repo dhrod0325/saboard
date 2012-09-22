@@ -2,6 +2,7 @@ package kr.oks.saboard.core.constants;
 
 public interface Constants {
 	String LOGIN_MEMBER_DOMAIN = "loginMemberDomain";
+	
 	/**
 	 * 파일 유무 확인용
 	 */
@@ -49,7 +50,10 @@ public interface Constants {
 	String VIEW_NAME_JOIN = "common/login/join_view";
 	
 	String UPLOAD_DIRECTORY = "upload_file_directory";
-
+	
+	/**
+	 * 기타
+	 */
 	String CR = "\r";
 	String LF = "\n";
 	String CRLF = CR + LF;
@@ -75,6 +79,4 @@ public interface Constants {
 
 	String KEY_USER_ID = "username";
 	String KEY_USER_PASSWORD = "password";
-
-	
 }

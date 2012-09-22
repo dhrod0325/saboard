@@ -31,11 +31,6 @@ public class AdminController {
 		return boardService.getAllBoardTableList();
 	}
 	
-	@RequestMapping(value = Constants.URL_ADMIN_ROOT)
-	public ModelAndView getAdmin(HttpServletRequest request) throws Exception {
-		return this.getAdminView(request);
-	}
-	
 	private ModelAndView adminLoginCheck(HttpServletRequest request,String viewName) throws Exception{
 		ModelAndView mav = new ModelAndView();
 		MemberDomain loginMemberDomain = (MemberDomain) request.getSession().getAttribute("loginMemberDomain"); 
@@ -49,7 +44,7 @@ public class AdminController {
 		
 		return mav;
 	}
-	
+
 	@RequestMapping(value = Constants.URL_ADMIN_INDEX)
 	public ModelAndView getAdminView(HttpServletRequest request) throws Exception {
 		return adminLoginCheck(request, Constants.VIEW_NAME_ADMIN_INDEX);
@@ -98,7 +93,6 @@ public class AdminController {
 		if(result.hasErrors()){
 			return this.getAdminBoardModifyView(request,boardTableDomain);
 		}else{
-			System.out.println("수정 했습니다.");
 			boardService.modifyBoardTable(boardTableDomain);
 			mav.setViewName("redirect:" + Constants.URL_ADMIN_BOARD_MODIFY);
 		}
