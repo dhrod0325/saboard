@@ -20,9 +20,10 @@ public class BoardServiceImpl implements BoardService{
 	public int insertBoard(BoardDomain boardDomain) throws Exception {
 		BoardDomain oldBoardDomain = getBoardDetailById(boardDomain.getId());
 		
-		boardDomain.setUser_id(XssFilterUtil.htmlInputFilter(boardDomain.getUser_id()));
-		boardDomain.setTitle(XssFilterUtil.htmlInputFilter(boardDomain.getTitle()));
+		boardDomain.setUser_id(XssFilterUtil.removeXSS(boardDomain.getUser_id()));
+		boardDomain.setTitle(XssFilterUtil.removeXSS(boardDomain.getTitle()));
 		boardDomain.setContent(XssFilterUtil.removeXSS(boardDomain.getContent()));
+		boardDomain.setPassword(XssFilterUtil.removeXSS(boardDomain.getPassword()));
 		
 		if(oldBoardDomain == null){
 			return boardDao.insertBoard(boardDomain);
@@ -60,16 +61,16 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	public void insertBoardFile(BoardFileDomain boardFileDomain) {
-		boardFileDomain.setFile_name(XssFilterUtil.htmlInputFilter(boardFileDomain.getFile_name()));
+		boardFileDomain.setFile_name(XssFilterUtil.removeXSS(boardFileDomain.getFile_name()));
 		boardDao.insertBoardFile(boardFileDomain);
 	}
 
 
-	public void insertBoardReply(BoardReplyDomain boardReplyDomain) {
-		boardReplyDomain.setUser_id(XssFilterUtil.htmlInputFilter(boardReplyDomain.getUser_id()));
-		boardReplyDomain.setEmail(XssFilterUtil.htmlInputFilter(boardReplyDomain.getEmail()));
-		boardReplyDomain.setContent(XssFilterUtil.htmlInputFilter(boardReplyDomain.getContent()));
-		boardDao.insertBoardReply(boardReplyDomain);
+	public int insertBoardReply(BoardReplyDomain boardReplyDomain) {
+		boardReplyDomain.setUser_id(XssFilterUtil.removeXSS(boardReplyDomain.getUser_id()));
+		boardReplyDomain.setEmail(XssFilterUtil.removeXSS(boardReplyDomain.getEmail()));
+		boardReplyDomain.setContent(XssFilterUtil.removeXSS(boardReplyDomain.getContent()));
+		return boardDao.insertBoardReply(boardReplyDomain);
 	}
 
 
@@ -107,5 +108,10 @@ public class BoardServiceImpl implements BoardService{
 
 	public int getTotBoardReplyCount(int no) {
 		return boardDao.getTotBoardReplyCount(no);
+	}
+
+	@Override
+	public void deleteBoardReplyById(int id) {
+		boardDao.deleteBoardReplyById(id);
 	}
 }

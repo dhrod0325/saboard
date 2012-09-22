@@ -2,6 +2,7 @@ package kr.oks.saboard;
 
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import kr.oks.saboard.board.domain.BoardDomain;
@@ -9,8 +10,8 @@ import kr.oks.saboard.board.domain.BoardFileDomain;
 import kr.oks.saboard.board.domain.BoardReplyDomain;
 import kr.oks.saboard.board.service.BoardService;
 import kr.oks.saboard.core.constants.Constants;
+import kr.oks.saboard.core.constants.ConstantsDB;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,7 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class ApiController {
 	
-	@Autowired
+	@Resource(name=ConstantsDB.BOARD_SERVICE_BEAN_NAME)
 	private BoardService boardService;
 	
 	/**

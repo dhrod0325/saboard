@@ -26,7 +26,9 @@ public interface BoardService {
 	
 	public List<BoardFileDomain> getBoardFileListById(int id) throws Exception;
 	
-	public void insertBoardReply(BoardReplyDomain boardReplyDomain);
+	public int insertBoardReply(BoardReplyDomain boardReplyDomain);
+	
+	public void deleteBoardReplyById(int id);
 	
 	public List<BoardReplyDomain> getAllBoardReplyListById(BoardReplyDomain boardReplyDomain);
 	

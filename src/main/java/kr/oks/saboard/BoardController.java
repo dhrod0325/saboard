@@ -2,6 +2,7 @@ package kr.oks.saboard;
 
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import kr.oks.saboard.board.domain.BoardDomain;
@@ -12,10 +13,10 @@ import kr.oks.saboard.board.domain.validator.BoardDomainValidator;
 import kr.oks.saboard.board.domain.validator.BoardReplyDomainValidator;
 import kr.oks.saboard.board.service.BoardService;
 import kr.oks.saboard.core.constants.Constants;
+import kr.oks.saboard.core.constants.ConstantsDB;
 import kr.oks.saboard.core.util.FileUtil;
 import kr.oks.saboard.core.util.auth.AuthUtil;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class BoardController {
 	
-	@Autowired
+	@Resource(name=ConstantsDB.BOARD_SERVICE_BEAN_NAME)
 	private BoardService boardService;
 
 	private void setRedirectView(ModelAndView mav, String url, BoardDomain boardDomain) {

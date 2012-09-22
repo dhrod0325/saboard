@@ -6,6 +6,7 @@ public class PagingDomain {
     private int totalSize = 0;
 
     public PagingDomain() {}
+    
     public PagingDomain(int pageNo, int pageSize) {
         this.pageNo = pageNo;
         this.pageSize = pageSize;

@@ -2,16 +2,17 @@ package kr.oks.saboard;
 
 import java.util.HashMap;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import kr.oks.saboard.common.domain.MemberDomain;
 import kr.oks.saboard.common.service.CommonService;
 import kr.oks.saboard.core.constants.Constants;
+import kr.oks.saboard.core.constants.ConstantsDB;
 import kr.oks.saboard.core.util.SessionUtil;
 import kr.oks.saboard.core.util.auth.AuthUtil;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class CommonController{
 	
-	@Autowired
+	@Resource(name=ConstantsDB.COMMON_SERVICE_BEAN_NAME)
 	private CommonService commonService;
 	
 	

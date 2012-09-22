@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+	<insert id="board.oracle.insertBoard" parameterClass="boardDomain">
+		INSERT INTO sa_board(id,board_id,user_id,password, title, content, has_File ,reg_date)
+		VALUES
+			(BOARD_SEQ.nextval,#board_id#,#user_id#,#password#,#title#,#content#,#has_File#,SYSDATE)
+		<selectKey keyProperty="id" resultClass="int">
+			SELECT BOARD_SEQ.currval as from dual
+		</selectKey>
+	</insert>
+	
+	<delete id="board.oracle.deleteBoardById" parameterClass="int">
+		DELETE
+		FROM
+			sa_board
+		WHERE
+			id = #id#
+	</delete>
+	
+	<insert id="board.oracle.insertBoardReply" parameterClass="boardReplayDomain" >
+		INSERT INTO sa_board_reply(
+			ID,
+			NO,
+			user_id,
+			PASSWORD,
+			email,
+			title,
+			CONTENT,
+			reg_date
+		)
+		VALUES
+			(
+				BOARD_REPLY_SEQ.nextval,
+				#no#,
+				#user_id#,
+				#password#,
+				#email#,
+				#title#,
+				#content#,
+				SYSDATE
+			)
+		<selectKey keyProperty="id" resultClass="int">
+			SELECT BOARD_REPLY_SEQ.currval as from dual
+		</selectKey>
+	</insert>
+	
+	<delete id="board.oracle.deleteBoardReplyById" parameterClass="int">
+		DELETE
+		FROM
+			sa_board_reply
+		WHERE
+			id = #id#
+	</delete>
+	
+	<select id="board.oracle.getTotBoardCount" resultClass="int" parameterClass="String">
+		SELECT
+			count(*)
+		FROM
+			sa_board 
+		WHERE
+			board_id = #board_id#
+	</select>
+	
+	<select id="board.oracle.getTotBoardReplyCount" resultClass="int" parameterClass="int">
+		SELECT
+			count(*)
+		FROM
+			sa_board_reply
+		WHERE
+			no = #no#
+	</select>
+	<select id="board.oracle.getAllBoardList" resultClass="boardDomain" parameterClass="boardDomain">
+	<![CDATA[
+		SELECT
+				A .*
+			FROM
+				(
+					SELECT
+						ROWNUM AS rnum,
+						B.*
+					FROM
+						(
+							SELECT
+								SB. ID,
+								SB.board_id,
+								SB.user_id,
+								SB.title,
+								SB.CONTENT,
+								SB.reg_date,
+								SB.has_File,
+								(
+									SELECT
+										COUNT(*)
+									FROM
+										sa_board_reply SBR
+									WHERE
+										SB. ID = SBR. NO
+								)reply_cnt
+							FROM
+								(
+									SELECT
+										SB. ID,
+										SB.board_id,
+										SB.user_id,
+										SB.title,
+										SB.CONTENT,
+										SB.reg_date,
+										SB.has_File
+									FROM
+										sa_board SB
+								)SB
+						)B
+				)A
+			WHERE
+				A.board_id = #board_id#
+			AND A.rnum >= ((#pageNo#-1)*#pageSize#)+1
+			AND A.rnum <= ((#pageNo#-1)*#pageSize#)+#pageSize# 
+			ORDER BY
+				A.reg_date DESC
+	]]>
+	</select>
+	
+	<select id="board.oracle.getBoardDetailById" parameterClass="int" resultClass="boardDomain">
+		SELECT
+			DISTINCT
+			SB.id,
+			SB.user_id,
+			SB. PASSWORD,
+			SB.title,
+			SB.content,
+			SB.reg_date,
+			SB.has_File,
+			SB.board_id,
+			(
+				SELECT
+					count(*)
+				FROM
+					sa_board_reply SBR
+				WHERE
+					SB.id = SBR. NO
+			)reply_cnt
+		FROM
+			(
+				SELECT
+					board_id,
+					id,
+					user_id,
+					PASSWORD,
+					title,
+					content,
+					reg_date,
+					has_file
+				FROM
+					sa_board
+			)SB
+		WHERE
+			SB.id = #id#
+	</select>
+	
+	<update id="board.oracle.updateBoardByboardDomain" parameterClass="boardDomain">
+		UPDATE sa_board
+		SET user_id = #user_id#,
+		 	title = #title#, content = #content#, password = #password#, has_File = #has_File#
+		WHERE
+			id = #id#
+	</update>
+	
+	<insert id="board.oracle.insertBoardFile" parameterClass="boardFileDomain">
+		INSERT INTO sa_board_file(
+			id,
+			file_name,
+			file_size,
+			file_reg_date
+		)
+		VALUES
+			(#id#,#file_name#,#file_size#,SYSDATE)
+	</insert>
+	
+	<select id="board.oracle.getBoardFileListById" parameterClass="int" resultClass="boardFileDomain">
+		SELECT
+			file_name,
+			file_size,
+			file_reg_date
+		FROM
+			sa_board_file
+		WHERE id = #id#
+	</select>
+	
+	<select id="board.oracle.getAllBoardReplyListById" parameterClass="boardReplayDomain" resultClass="boardReplayDomain">
+	<![CDATA[
+		SELECT
+			A .*
+		FROM
+			(
+				SELECT
+					ROWNUM AS rnum,
+					B.*
+				FROM
+					(
+						SELECT
+							(
+								SELECT
+									SB.board_id
+								FROM
+									sa_board SB
+								WHERE
+									SB.ID = SBR. NO
+							)board_id,
+							SBR.ID,
+							SBR.NO,
+							SBR.user_id,
+							SBR.PASSWORD,
+							SBR.email,
+							SBR.title,
+							SBR.CONTENT,
+							SBR.reg_date
+						FROM
+							sa_board_reply SBR
+						WHERE SBR.no = #no#
+						order by SBR.reg_date desc
+					)B
+			)A
+		WHERE
+					A.rnum >= ((#pageNo#-1)*#pageSize#)+1
+					AND A.rnum <= ((#pageNo#-1)*#pageSize#)+#pageSize#
+		]]> 
+	</select>
+	
+	<select id="board.oracle.getAllBoardTableList" resultClass="boardTableDomain">
+		SELECT * FROM sa_board_tables
+	</select>
+	
+	<insert id="board.oracle.insertBoardTable" parameterClass="boardTableDomain">
+		INSERT INTO sa_board_tables(
+			id,
+			board_id,
+			board_nm,
+			board_desc,
+			theme
+		)
+		VALUES
+			(
+				BOARD_TABLE_SEQ.nextval,
+				#board_id#,
+				#board_nm#,
+				#board_desc#,
+				#theme#
+			)
+	</insert>
+	
+	<select id="board.oracle.getBoardTheme" parameterClass="string" resultClass="string">
+		SELECT theme from sa_board_tables WHERE board_id=#board_id# GROUP BY theme
+	</select>
+	
+	<delete id="board.oracle.deleteBoardTable" parameterClass="int">
+		DELETE FROM sa_board_tables where id = #id#
+	</delete>
+	
+	<select id="board.oracle.getBoardIdById" resultClass="string" parameterClass="boardTableDomain">
+		SELECT board_id FROM sa_board_tables where board_id = #board_id#
+	</select>
+	
+	<update id="board.oracle.modifyBoardTable" parameterClass="boardTableDomain">
+		UPDATE sa_board_tables
+		SET board_id = #board_id#,
+			board_nm = #board_nm#,
+			board_desc = #board_desc#,
+			theme = #theme#
+		WHERE
+			id = #id# 
+	</update>
+	
+</sqlMap>

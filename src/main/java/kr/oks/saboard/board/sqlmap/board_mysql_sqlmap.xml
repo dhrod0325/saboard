@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
 <sqlMap>
-	<insert id="board.insertBoardTable" parameterClass="boardTableDomain">
-		INSERT INTO sa_board_tables (board_id,board_nm,board_desc,theme) values (#board_id#,#board_nm#,#board_desc#,#theme#)
+	<insert id="board.mysql.insertBoardTable" parameterClass="boardTableDomain">
+		INSERT INTO 
+			sa_board_tables (board_id,board_nm,board_desc,theme) values (#board_id#,#board_nm#,#board_desc#,#theme#)
 	</insert>
 	
-	<select id="board.getAllBoardTableList" resultClass="boardTableDomain">
+	<select id="board.mysql.getAllBoardTableList" resultClass="boardTableDomain">
 		SELECT * FROM sa_board_tables
 	</select>
 	
-	<select id="board.getBoardIdById" resultClass="string" parameterClass="boardTableDomain">
+	<select id="board.mysql.getBoardIdById" resultClass="string" parameterClass="boardTableDomain">
 		SELECT board_id FROM sa_board_tables where board_id = #board_id#
 	</select>
 	
-	<delete id="board.deleteBoardTable" parameterClass="int">
+	<delete id="board.mysql.deleteBoardTable" parameterClass="int">
 		DELETE FROM sa_board_tables where id = #id#
 	</delete>
 	
-	<update id="board.modifyBoardTable" parameterClass="boardTableDomain">
+	<update id="board.mysql.modifyBoardTable" parameterClass="boardTableDomain">
 		UPDATE sa_board_tables
 		SET board_id = #board_id#,
 			board_nm = #board_nm#,
@@ -27,7 +28,7 @@
 			id = #id# 
 	</update>
 		
-	<insert id="board.insertBoard" parameterClass="boardDomain">
+	<insert id="board.mysql.insertBoard" parameterClass="boardDomain">
 		INSERT INTO sa_board(board_id,user_id,password, title, content, has_File ,reg_date)
 		VALUES
 			(#board_id#,#user_id#,#password#,#title#,#content#, #has_File#,now())
@@ -36,11 +37,15 @@
 		</selectKey>
 	</insert>
 	
-	<insert id="board.insertBoardReply" parameterClass="boardReplayDomain">
+	<insert id="board.mysql.insertBoardReply" parameterClass="boardReplayDomain" >
 		INSERT INTO sa_board_reply (no,user_id,password,email,title,content,reg_date) VALUES (#no#, #user_id#, #password#, #email#, #title#, #content#, now());
+		
+		<selectKey keyProperty="id" resultClass="int">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
 	</insert>
 	
-	<insert id="board.insertBoardFile" parameterClass="boardFileDomain">
+	<insert id="board.mysql.insertBoardFile" parameterClass="boardFileDomain">
 		INSERT INTO sa_board_file(
 			id,
 			file_name,
@@ -51,7 +56,7 @@
 			(#id#,#file_name#,#file_size#,now())
 	</insert>
 	
-	<select id="board.getAllBoardReplyListById" parameterClass="boardReplayDomain" resultClass="boardReplayDomain">
+	<select id="board.mysql.getAllBoardReplyListById" parameterClass="boardReplayDomain" resultClass="boardReplayDomain">
 		SELECT
 			(SELECT SB.board_id from sa_board SB WHERE SB.id = SBR.no) board_id,
 			SBR.id,
@@ -65,12 +70,12 @@
 		FROM
 			sa_board_reply SBR
 		WHERE
-			SBR.no = #id#
+			SBR.no = #no#
 			order by SBR.reg_date desc
 			limit #startNo#,#pageSize#
 	</select>
 
-	<select id="board.getTotBoardCount" resultClass="int" parameterClass="String">
+	<select id="board.mysql.getTotBoardCount" resultClass="int" parameterClass="String">
 		SELECT
 			count(*)
 		FROM
@@ -79,7 +84,7 @@
 			board_id = #board_id#
 	</select>
 	
-	<select id="board.getTotBoardReplyCount" resultClass="int" parameterClass="int">
+	<select id="board.mysql.getTotBoardReplyCount" resultClass="int" parameterClass="int">
 		SELECT
 			count(*)
 		FROM
@@ -88,7 +93,7 @@
 			no = #no#
 	</select>
 	
-	<delete id="board.deleteBoardById" parameterClass="int">
+	<delete id="board.mysql.deleteBoardById" parameterClass="int">
 		DELETE
 		FROM
 			sa_board
@@ -96,11 +101,19 @@
 			id = #id#
 	</delete>
 	
-	<select id="board.getTheme" parameterClass="string" resultClass="string">
+	<delete id="board.mysql.deleteBoardReplyById" parameterClass="int">
+		DELETE
+		FROM
+			sa_board_reply
+		WHERE
+			id = #id#
+	</delete>
+	
+	<select id="board.mysql.getBoardTheme" parameterClass="string" resultClass="string">
 		SELECT theme from sa_board_tables WHERE board_id=#board_id# LIMIT 1 
 	</select>
 	
-	<select id="board.getAllBoardList" resultClass="boardDomain" parameterClass="boardDomain">
+	<select id="board.mysql.getAllBoardList" resultClass="boardDomain" parameterClass="boardDomain">
 	<![CDATA[
 		SELECT 
 	       SB.id, 
@@ -139,7 +152,7 @@
 	]]>
 	</select>
 	
-	<select id="board.getBoardDetailById" parameterClass="int" resultClass="boardDomain">
+	<select id="board.mysql.getBoardDetailById" parameterClass="int" resultClass="boardDomain">
 		SELECT
 			SB.id,
 			SB.user_id,
@@ -170,19 +183,12 @@
 					has_file
 				FROM
 					sa_board
-			)SB,
-			(
-				SELECT
-					board_id
-				FROM
-					sa_board_tables
-			)SBT
+			)SB
 		WHERE
 			SB.id = #id#
-			and SB.board_id = SBT.board_id LIMIT 1
 	</select>
 	
-	<select id="board.getBoardFileListById" parameterClass="int" resultClass="boardFileDomain">
+	<select id="board.mysql.getBoardFileListById" parameterClass="int" resultClass="boardFileDomain">
 		SELECT
 			file_name,
 			file_size,
@@ -192,7 +198,7 @@
 		WHERE id = #id#
 	</select>
 	
-	<update id="board.updateBoardByboardDomain" parameterClass="boardDomain">
+	<update id="board.mysql.updateBoardByboardDomain" parameterClass="boardDomain">
 		UPDATE sa_board
 		SET user_id = #user_id#,
 		 	title = #title#, content = #content#, password = #password#, has_File = #has_File#

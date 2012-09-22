@@ -3,14 +3,23 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-	<bean id="boardDao" class="kr.oks.saboard.board.dao.BoardDaoImpl">
+	<bean id="boardDaoMysql" class="kr.oks.saboard.board.dao.BoardDaoMySqlImpl">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="sqlMapClient" ref="sqlMapClient"></property>
+	</bean>
+	
+	<bean id="boardDaoOracle" class="kr.oks.saboard.board.dao.BoardDaoOracleImpl">
 		<property name="dataSource" ref="dataSource"></property>
 		<property name="sqlMapClient" ref="sqlMapClient"></property>
 	</bean>
 
 
-	<bean class="kr.oks.saboard.board.service.BoardServiceImpl">
-		<property name="boardDao" ref="boardDao"></property>
+	<bean name="boardServiceMysql" class="kr.oks.saboard.board.service.BoardServiceImpl">
+		<property name="boardDao" ref="boardDaoMysql"></property>
+	</bean>
+	
+	<bean name="boardServiceOracle" class="kr.oks.saboard.board.service.BoardServiceImpl">
+		<property name="boardDao" ref="boardDaoOracle"></property>
 	</bean>
 </beans>
 

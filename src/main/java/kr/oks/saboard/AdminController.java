@@ -2,6 +2,7 @@ package kr.oks.saboard;
 
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import kr.oks.saboard.board.domain.BoardTableDomain;
@@ -9,9 +10,9 @@ import kr.oks.saboard.board.domain.validator.BoardTableDomainValidator;
 import kr.oks.saboard.board.service.BoardService;
 import kr.oks.saboard.common.domain.MemberDomain;
 import kr.oks.saboard.core.constants.Constants;
+import kr.oks.saboard.core.constants.ConstantsDB;
 import kr.oks.saboard.core.util.SkinUtil;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -22,8 +23,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class AdminController {
-
-	@Autowired
+	
+	@Resource(name=ConstantsDB.BOARD_SERVICE_BEAN_NAME)
 	private BoardService boardService;
 
 	@ModelAttribute(value = "boardTableList")

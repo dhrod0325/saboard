@@ -114,4 +114,12 @@ public class BoardDomain extends PagingDomain {
 	public void setBoard_id(String board_id) {
 		this.board_id = board_id;
 	}
+	
+	@Override
+	public String toString() {
+		return   "title = "+getTitle()+"\n"
+				+"content = "+ getContent()+"\n"
+				+"password = "+ getPassword()+"\n"
+				+"theme = "+ getTheme()+"\n";
+	}
 }
