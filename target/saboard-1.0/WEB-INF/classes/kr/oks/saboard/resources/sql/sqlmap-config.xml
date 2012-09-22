@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN" "http://www.ibatis.com/dtd/sql-map-config-2.dtd">
+
+<sqlMapConfig>
+	<typeAlias alias="string" type="java.lang.String" />
+	<typeAlias alias="int" type="java.lang.Integer" />
+	<typeAlias alias="float" type="java.lang.Float" />
+	<typeAlias alias="map" type="java.util.Map" />
+	<typeAlias alias="resultMap" type="java.util.HashMap" />
+	
+	<typeAlias alias="boardTableDomain" type="kr.oks.saboard.board.domain.BoardTableDomain"/>
+	<typeAlias alias="boardDomain" type="kr.oks.saboard.board.domain.BoardDomain"/>	
+	<typeAlias alias="boardReplayDomain" type="kr.oks.saboard.board.domain.BoardReplyDomain"/>
+	<typeAlias alias="boardFileDomain" type="kr.oks.saboard.board.domain.BoardFileDomain"/>
+	
+	<sqlMap resource="kr/oks/saboard/common/sqlmap/common_sqlmap.xml" />
+	<sqlMap resource="kr/oks/saboard/board/sqlmap/board_sqlmap.xml" />
+</sqlMapConfig>

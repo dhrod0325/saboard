@@ -1,0 +1,6 @@
+*{
+	word-break:break-all;
+}
+a:hover{
+	text-decoration: none;
+}

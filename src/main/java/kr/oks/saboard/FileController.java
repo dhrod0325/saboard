@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.ModelAndView;
 
-@Controller
 public class FileController implements ApplicationContextAware{
 	
 	private WebApplicationContext context = null;
