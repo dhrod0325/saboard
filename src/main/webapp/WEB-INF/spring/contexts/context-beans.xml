@@ -3,12 +3,24 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 	
+	<!-- filedownload -->
 	<bean id="fileDownloadView" class="kr.oks.saboard.core.view.FileDownLoadView" />
 		
+	<!-- jsonview -->
 	<bean id="jsonView" class="net.sf.json.spring.web.servlet.view.JsonView" >
 		<property name="contentType" value="application/json;charset=UTF-8"></property>
 	</bean>
 	
+	<!-- mail -->
+	<bean class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="${mail.host}"></property>
+		<property name="port" value="${mail.port}"></property>
+		<property name="defaultEncoding" value="${mail.defaultEncoding}"></property>
+	</bean>
+	
+	<bean class="kr.oks.saboard.core.mail.MailService"></bean>
+	
+	<!-- listener -->
 	<bean class="kr.oks.saboard.core.listener.ContextReloader" />
 </beans>
 

@@ -13,7 +13,9 @@ import kr.oks.saboard.board.service.BoardService;
 import kr.oks.saboard.core.constants.ConstantsDB;
 
 import org.apache.log4j.Logger;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.springframework.mock.web.MockHttpServletRequest;
 
 public class TestBoardMysql extends TestAbstract {
 
@@ -50,10 +52,10 @@ public class TestBoardMysql extends TestAbstract {
 	public void testBoardInsertAndDelete() throws Exception {
 		BoardDomain boardDomain = getBoardDomain("default");
 		int id = boardService.insertBoard(boardDomain);
-
 		boardService.deleteBoardById(id);
 	}
 
+	@Ignore
 	@Test
 	public void testBoardReplyInsertAndDelete() throws Exception {
 		BoardDomain boardDomain = getBoardDomain("default");
@@ -74,6 +76,7 @@ public class TestBoardMysql extends TestAbstract {
 		boardService.deleteBoardReplyById(boardReplyId);
 	}
 
+	@Ignore
 	@Test
 	public void testXss() throws Exception {
 		xssTest("<script>alert(1);</script>");
@@ -85,6 +88,7 @@ public class TestBoardMysql extends TestAbstract {
 		xssTest("<script src='http://malicous js'</script>");
 	}
 
+	@Ignore
 	@Test
 	public void testSelectBoardReplyList() throws Exception {
 		BoardDomain boardDomain = getBoardDomain("default");
@@ -115,6 +119,7 @@ public class TestBoardMysql extends TestAbstract {
 		boardService.deleteBoardReplyById(boardReplyId);
 	}
 
+	@Ignore
 	@Test
 	public void updateBoardByboardDomain() throws Exception {
 		BoardDomain boardDomain = getBoardDomain("default");
