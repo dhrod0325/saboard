@@ -2,20 +2,29 @@ package kr.oks.saboard.board.service;
 
 import java.util.List;
 
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+
 import kr.oks.saboard.board.dao.BoardDao;
 import kr.oks.saboard.board.domain.BoardDomain;
 import kr.oks.saboard.board.domain.BoardFileDomain;
 import kr.oks.saboard.board.domain.BoardReplyDomain;
 import kr.oks.saboard.board.domain.BoardTableDomain;
+import kr.oks.saboard.board.event.BoardInsertEvent;
 import kr.oks.saboard.core.filter.xss.XSSFilter;
 import kr.oks.saboard.core.util.auth.AuthUtil;
 
-public class BoardServiceImpl implements BoardService{
+public class BoardServiceImpl implements BoardService,ApplicationContextAware{
 	private BoardDao boardDao;
 	
 	public void setBoardDao(BoardDao boardDao) {
 		this.boardDao = boardDao;
 	}
+	
+	@Autowired
+	private ApplicationContext context;
 	
 	public int insertBoard(BoardDomain boardDomain) throws Exception {
 		BoardDomain oldBoardDomain = getBoardDetailById(boardDomain.getId());
@@ -26,6 +35,9 @@ public class BoardServiceImpl implements BoardService{
 		boardDomain.setPassword(XSSFilter.removeXSS(boardDomain.getPassword()));
 		
 		if(oldBoardDomain == null){
+			
+			context.publishEvent(new BoardInsertEvent(this, boardDomain));
+			
 			return boardDao.insertBoard(boardDomain);
 		}else{
 			if(AuthUtil.getLoginMemberDomain().getIsAdmin()){
@@ -113,5 +125,10 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public void deleteBoardReplyById(int id) {
 		boardDao.deleteBoardReplyById(id);
+	}
+
+	@Override
+	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+		
 	}
 }

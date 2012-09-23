@@ -117,9 +117,9 @@ public class BoardDomain extends PagingDomain {
 	
 	@Override
 	public String toString() {
-		return   "title = "+getTitle()+"\n"
-				+"content = "+ getContent()+"\n"
-				+"password = "+ getPassword()+"\n"
-				+"theme = "+ getTheme()+"\n";
+		return   "title = "+getTitle()+","
+				+"content = "+ getContent()+","
+				+"password = "+ getPassword()+","
+				+"theme = "+ getTheme();
 	}
 }

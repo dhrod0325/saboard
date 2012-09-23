@@ -15,7 +15,6 @@ import kr.oks.saboard.core.constants.ConstantsDB;
 import org.apache.log4j.Logger;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.springframework.mock.web.MockHttpServletRequest;
 
 public class TestBoardMysql extends TestAbstract {
 
@@ -32,6 +31,7 @@ public class TestBoardMysql extends TestAbstract {
 		boardDomain.setTitle(s);
 		boardDomain.setContent(s);
 		boardDomain.setTheme(s);
+		boardDomain.setPassword("1");
 
 		return boardDomain;
 	}
