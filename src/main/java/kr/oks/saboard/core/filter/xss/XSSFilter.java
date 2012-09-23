@@ -3,7 +3,7 @@ package kr.oks.saboard.core.filter.xss;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class HelperXSSFilter {
+public class XSSFilter {
 	private static interface Patterns {
 		public static final Pattern SCRIPTS = Pattern.compile("<(no)?script[^>]*>.*?</(no)?script>", Pattern.DOTALL);
 		public static final Pattern SCRIPTS2 = Pattern.compile("(?i)\\<script(.*?)</script>", Pattern.DOTALL);
@@ -21,7 +21,7 @@ public class HelperXSSFilter {
 		public static final Pattern WHITESPACE = Pattern.compile("\\s\\s+");
 	}
 	
-	public boolean checkHasInScript(String str_low){
+	public static boolean checkHasInScript(String str_low){
 		return str_low.contains("javascript") || str_low.contains("script")
 				|| str_low.contains("iframe") || str_low.contains("document")
 				|| str_low.contains("vbscript") || str_low.contains("applet")
@@ -37,7 +37,7 @@ public class HelperXSSFilter {
 				|| str_low.contains("onunload");
 	}
 	
-	public String removeXSS(String str) {
+	public static String removeXSS(String str) {
 		Matcher m;
 		
 		m = Patterns.SCRIPTS.matcher(str);

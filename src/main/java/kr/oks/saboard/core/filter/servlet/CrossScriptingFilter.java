@@ -25,5 +25,4 @@ public class CrossScriptingFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         chain.doFilter(new RequestWrapper((HttpServletRequest) request), response);
     }
-
 }

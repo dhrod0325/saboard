@@ -18,4 +18,5 @@
 	
 	<sqlMap resource="kr/oks/saboard/board/sqlmap/board_mysql_sqlmap.xml" />
 	<sqlMap resource="kr/oks/saboard/board/sqlmap/board_oracle_sqlmap.xml" />
+	
 </sqlMapConfig>

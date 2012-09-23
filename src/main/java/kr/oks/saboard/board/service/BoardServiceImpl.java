@@ -7,7 +7,7 @@ import kr.oks.saboard.board.domain.BoardDomain;
 import kr.oks.saboard.board.domain.BoardFileDomain;
 import kr.oks.saboard.board.domain.BoardReplyDomain;
 import kr.oks.saboard.board.domain.BoardTableDomain;
-import kr.oks.saboard.core.filter.xss.XssFilterUtil;
+import kr.oks.saboard.core.filter.xss.XSSFilter;
 import kr.oks.saboard.core.util.auth.AuthUtil;
 
 public class BoardServiceImpl implements BoardService{
@@ -20,10 +20,10 @@ public class BoardServiceImpl implements BoardService{
 	public int insertBoard(BoardDomain boardDomain) throws Exception {
 		BoardDomain oldBoardDomain = getBoardDetailById(boardDomain.getId());
 		
-		boardDomain.setUser_id(XssFilterUtil.removeXSS(boardDomain.getUser_id()));
-		boardDomain.setTitle(XssFilterUtil.removeXSS(boardDomain.getTitle()));
-		boardDomain.setContent(XssFilterUtil.removeXSS(boardDomain.getContent()));
-		boardDomain.setPassword(XssFilterUtil.removeXSS(boardDomain.getPassword()));
+		boardDomain.setUser_id(XSSFilter.removeXSS(boardDomain.getUser_id()));
+		boardDomain.setTitle(XSSFilter.removeXSS(boardDomain.getTitle()));
+		boardDomain.setContent(XSSFilter.removeXSS(boardDomain.getContent()));
+		boardDomain.setPassword(XSSFilter.removeXSS(boardDomain.getPassword()));
 		
 		if(oldBoardDomain == null){
 			return boardDao.insertBoard(boardDomain);
@@ -61,15 +61,15 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	public void insertBoardFile(BoardFileDomain boardFileDomain) {
-		boardFileDomain.setFile_name(XssFilterUtil.removeXSS(boardFileDomain.getFile_name()));
+		boardFileDomain.setFile_name(XSSFilter.removeXSS(boardFileDomain.getFile_name()));
 		boardDao.insertBoardFile(boardFileDomain);
 	}
 
 
 	public int insertBoardReply(BoardReplyDomain boardReplyDomain) {
-		boardReplyDomain.setUser_id(XssFilterUtil.removeXSS(boardReplyDomain.getUser_id()));
-		boardReplyDomain.setEmail(XssFilterUtil.removeXSS(boardReplyDomain.getEmail()));
-		boardReplyDomain.setContent(XssFilterUtil.removeXSS(boardReplyDomain.getContent()));
+		boardReplyDomain.setUser_id(XSSFilter.removeXSS(boardReplyDomain.getUser_id()));
+		boardReplyDomain.setEmail(XSSFilter.removeXSS(boardReplyDomain.getEmail()));
+		boardReplyDomain.setContent(XSSFilter.removeXSS(boardReplyDomain.getContent()));
 		return boardDao.insertBoardReply(boardReplyDomain);
 	}
 

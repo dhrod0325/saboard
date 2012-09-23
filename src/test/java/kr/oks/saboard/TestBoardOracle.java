@@ -53,8 +53,6 @@ public class TestBoardOracle extends TestAbstract {
 		BoardDomain boardDomain = getBoardDomain("DEFAULT");
 		int id = boardService.insertBoard(boardDomain);
 		
-		System.out.println(id);
-		
 		boardService.deleteBoardById(id);
 	}
 	
@@ -101,6 +99,7 @@ public class TestBoardOracle extends TestAbstract {
 		}
 	}
 	
+	@Ignore
 	@Test
 	public void testGetBoardDetailById(){
 		BoardDomain boardDomain = boardService.getBoardDetailById(69);

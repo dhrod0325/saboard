@@ -20,9 +20,7 @@ public class FileDownLoadView extends AbstractView {
 	}
 
 	@Override
-	protected void renderMergedOutputModel(Map<String, Object> model,
-			HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+	protected void renderMergedOutputModel(Map<String, Object> model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		File file = (File) model.get("downloadFile");
 
@@ -36,12 +34,10 @@ public class FileDownLoadView extends AbstractView {
 		if (ie) {
 			fileName = URLEncoder.encode(file.getName(), "utf-8");
 		} else {
-			fileName = new String(file.getName().getBytes("utf-8"),
-					"iso-8859-1");
+			fileName = new String(file.getName().getBytes("utf-8"), "iso-8859-1");
 		}
 
-		response.setHeader("Content-Disposition", "attachment; filename=\""
-				+ fileName + "\";");
+		response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\";");
 		response.setHeader("Content-Transfer-Encoding", "binary");
 		OutputStream out = response.getOutputStream();
 		FileInputStream fis = null;

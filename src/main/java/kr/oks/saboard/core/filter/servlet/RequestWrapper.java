@@ -1,20 +1,16 @@
 package kr.oks.saboard.core.filter.servlet;
 
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
-import kr.oks.saboard.core.filter.xss.HelperXSSFilter;
+import kr.oks.saboard.core.filter.xss.XSSFilter;
 
 public final class RequestWrapper extends HttpServletRequestWrapper {
-	public final static HelperXSSFilter xssFilter = new HelperXSSFilter();
-	
 	public RequestWrapper(HttpServletRequest servletRequest) {
 		super(servletRequest);
 	}
 
 	public String[] getParameterValues(String parameter) {
-		//logger.info("In getParameterValues .. parameter .......");
 		String[] values = super.getParameterValues(parameter);
 		if (values == null) {
 			return null;
@@ -28,21 +24,17 @@ public final class RequestWrapper extends HttpServletRequestWrapper {
 	}
 
 	public String getParameter(String parameter) {
-		//logger.info("In getParameter .. parameter .......");
 		String value = super.getParameter(parameter);
 		if (value == null) {
 			return null;
 		}
-		//logger.info("In getParameter RequestWrapper ........ value .......");
 		return cleanXSS(value);
 	}
 
 	public String getHeader(String name) {
-		//logger.info("In getHeader .. parameter .......");
 		String value = super.getHeader(name);
 		if (value == null)
 			return null;
-		//logger.info("In getHeader RequestWrapper ........... value ....");
 		return cleanXSS(value);
 	}
 
@@ -53,7 +45,7 @@ public final class RequestWrapper extends HttpServletRequestWrapper {
 		value = value.replaceAll("(?i)<script.*?>.*?</script.*?>", "");
 		value = value.replaceAll("(?i)<.*?javascript:.*?>.*?</.*?>", "");
 		value = value.replaceAll("(?i)<.*?\\s+on.*?>.*?</.*?>", "");
-		value = xssFilter.removeXSS(value);
+		value = XSSFilter.removeXSS(value);
 		
 		return value;
 	}

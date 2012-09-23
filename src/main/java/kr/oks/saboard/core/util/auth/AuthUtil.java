@@ -8,7 +8,6 @@ import java.security.PublicKey;
 import java.security.spec.RSAPublicKeySpec;
 import java.util.HashMap;
 
-import javax.crypto.Cipher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -58,7 +57,7 @@ public class AuthUtil extends SessionUtil{
 
 		// 공개키를 문자열로 변환하여 JavaScript RSA 라이브러리 넘겨준다.
 		RSAPublicKeySpec publicSpec = (RSAPublicKeySpec) keyFactory.getKeySpec(publicKey, RSAPublicKeySpec.class);
-
+		
 		String publicKeyModulus = publicSpec.getModulus().toString(16);
 		String publicKeyExponent = publicSpec.getPublicExponent().toString(16);
 
@@ -80,36 +79,12 @@ public class AuthUtil extends SessionUtil{
 			return null;
 		}
 		
-		String username = decryptRsa(privateKey, securedUsername);
-		String password = decryptRsa(privateKey, securedPassword);
+		String username = CipherUtil.decryptRsa(privateKey, securedUsername);
+		String password = CipherUtil.decryptRsa(privateKey, securedPassword);
 		
 		tmpMap.put("username", username);
 		tmpMap.put("password", password);
 		
 		return tmpMap;
-	}
-	
-	private static String decryptRsa(PrivateKey privateKey, String securedValue) throws Exception {
-		Cipher cipher = Cipher.getInstance("RSA");
-		byte[] encryptedBytes = hexToByteArray(securedValue);
-		cipher.init(Cipher.DECRYPT_MODE, privateKey);
-		byte[] decryptedBytes = cipher.doFinal(encryptedBytes);
-		String decryptedValue = new String(decryptedBytes, "utf-8"); // 문자 인코딩 주의.
-		
-		return decryptedValue;
-	}
-	
-	private static byte[] hexToByteArray(String hex) {
-		if (hex == null || hex.length() % 2 != 0) {
-			return new byte[] {};
-		}
-
-		byte[] bytes = new byte[hex.length() / 2];
-		for (int i = 0; i < hex.length(); i += 2) {
-			byte value = (byte) Integer.parseInt(hex.substring(i, i + 2), 16);
-			bytes[(int) Math.floor(i / 2)] = value;
-		}
-		
-		return bytes;
 	}
 }

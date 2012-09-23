@@ -5,7 +5,7 @@ import kr.oks.saboard.common.domain.MemberDomain;
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
 public class CommonDaoMysqlImpl extends SqlMapClientDaoSupport implements CommonDao{
-	public void join(MemberDomain memberDomain) {
+	public void insertMemeber(MemberDomain memberDomain) {
 		getSqlMapClientTemplate().insert("common.mysql.join",memberDomain);
 	}
 

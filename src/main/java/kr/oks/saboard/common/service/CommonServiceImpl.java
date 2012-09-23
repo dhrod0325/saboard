@@ -11,8 +11,8 @@ public class CommonServiceImpl implements CommonService{
 		this.commonDao = commonDao;
 	}
 
-	public void join(MemberDomain memberDomain) {
-		commonDao.join(memberDomain);
+	public void insertMemeber(MemberDomain memberDomain) {
+		commonDao.insertMemeber(memberDomain);
 	}
 	
 	public MemberDomain getLoginMemeberDomain(MemberDomain memberDomain){

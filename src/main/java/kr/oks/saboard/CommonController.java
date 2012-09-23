@@ -45,7 +45,7 @@ public class CommonController{
 		memberDomain.setPw(authMap.get(Constants.KEY_USER_PASSWORD));
 		memberDomain.setName(secured_reg_userName);
 			
-		commonService.join(memberDomain);
+		commonService.insertMemeber(memberDomain);
 			
 		return "redirect:"+Constants.URL_LOGIN;
 	}

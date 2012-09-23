@@ -123,10 +123,9 @@
 	
 	<select id="board.oracle.getBoardDetailById" parameterClass="int" resultClass="boardDomain">
 		SELECT
-			DISTINCT
 			SB.id,
 			SB.user_id,
-			SB. PASSWORD,
+			SB.PASSWORD,
 			SB.title,
 			SB.content,
 			SB.reg_date,
@@ -168,13 +167,14 @@
 	
 	<insert id="board.oracle.insertBoardFile" parameterClass="boardFileDomain">
 		INSERT INTO sa_board_file(
+			no,
 			id,
 			file_name,
 			file_size,
 			file_reg_date
 		)
 		VALUES
-			(#id#,#file_name#,#file_size#,SYSDATE)
+			(BOARD_FILE_SEQ.nextval,#id#,#file_name#,#file_size#,SYSDATE)
 	</insert>
 	
 	<select id="board.oracle.getBoardFileListById" parameterClass="int" resultClass="boardFileDomain">
