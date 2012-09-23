@@ -21,7 +21,6 @@ public class FileDownLoadView extends AbstractView {
 
 	@Override
 	protected void renderMergedOutputModel(Map<String, Object> model, HttpServletRequest request, HttpServletResponse response) throws Exception {
-
 		File file = (File) model.get("downloadFile");
 
 		response.setContentType(getContentType());

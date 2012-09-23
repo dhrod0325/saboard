@@ -47,7 +47,6 @@ public class TestBoardOracle extends TestAbstract {
 		boardService.deleteBoardById(id);
 	}
 
-	@Ignore
 	@Test
 	public void testBoardInsertAndDelete() throws Exception {
 		BoardDomain boardDomain = getBoardDomain("DEFAULT");
@@ -56,7 +55,6 @@ public class TestBoardOracle extends TestAbstract {
 		boardService.deleteBoardById(id);
 	}
 	
-	@Ignore
 	@Test
 	public void testBoardReplyInsertAndDelete() throws Exception {
 		BoardDomain boardDomain = getBoardDomain("default");
@@ -76,14 +74,12 @@ public class TestBoardOracle extends TestAbstract {
 		boardService.deleteBoardReplyById(boardReplyId);
 	}
 	
-	@Ignore
 	@Test
 	public void testTotCounts(){
 		assertNotNull(boardService.getTotBoardCount("test"));
 		assertNotNull(boardService.getTotBoardReplyCount(10));
 	}
 	
-	@Ignore
 	@Test
 	public void testGetAllBoardList() throws Exception{
 		BoardDomain boardDomain = getBoardDomain("default");
@@ -120,7 +116,6 @@ public class TestBoardOracle extends TestAbstract {
 		xssTest("<script src='http://malicous js'</script>");
 	}
 
-	@Ignore
 	@Test
 	public void testSelectBoardReplyList() throws Exception {
 		BoardDomain boardDomain = getBoardDomain("default");
@@ -151,7 +146,6 @@ public class TestBoardOracle extends TestAbstract {
 		boardService.deleteBoardReplyById(boardReplyId);
 	}
 
-	@Ignore
 	@Test
 	public void updateBoardByboardDomain() throws Exception {
 		BoardDomain boardDomain = getBoardDomain("default");
