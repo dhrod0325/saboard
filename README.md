@@ -13,7 +13,7 @@
 
 테스트 매핑 주소
 
-contextpath/getBoardListView.do 게시판
-contextpath/admin/ 관리자
+루트패스/getBoardListView.do 게시판
+루트패스/admin/ 관리자
 
 아참~! sa_member에 관리자도 추가를 해줘야함!
