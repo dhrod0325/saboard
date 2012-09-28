@@ -6,14 +6,17 @@
 - kr.oks.saboard.resources 패키지에 db.properties 설정 변경
 - was 실행
 
+[관리자 추가방법]
+sa_member 테이블에 role 10 으로 아무 아이디나 추가
+
 [TODO]
 - 관리자 권한 설정
 - 회원 관리
 - SNS연동
 
+
+
 테스트 매핑 주소
 
 루트패스/getBoardListView.do 게시판
-루트패스/admin/ 관리자
-
-아참~! sa_member에 관리자도 추가를 해줘야함!
+루트패스/login.do 로그인
