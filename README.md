@@ -7,7 +7,7 @@
 - was 실행
 
 [관리자 추가방법]
-sa_member 테이블에 role 10 으로 아무 아이디나 추가
+- sa_member 테이블에 role 10 으로 아무 아이디나 추가
 
 [TODO]
 - 관리자 권한 설정
